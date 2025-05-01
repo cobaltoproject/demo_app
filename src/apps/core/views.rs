@@ -2,7 +2,9 @@ use std::collections::HashMap;
 use cobalto::template::{render_template, TemplateValue};
 use cobalto::router::Response;
 
+
 pub async fn home(_params: HashMap<String, String>) -> Response {
+    // cobalto::template::set_display_logs(true);
     let context = HashMap::from([
         ("username".to_string(), TemplateValue::String("Alessandro".into())),
         ("shopping_list".to_string(), TemplateValue::List(vec![
