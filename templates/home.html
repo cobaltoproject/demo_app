@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Benvenuto, {{ username }}!</h1>
+
+<h2>Lista della spesa:</h2>
+<ul>
+{% for item in shopping_list %}
+    {% if item.available %}
+        <li>{{ item.name }} - Disponibile ✅</li>
+    {% else %}
+        <li>{{ item.name }} - Non disponibile ❌</li>
+    {% endif %}
+{% endfor %}
+</ul>
+
+{% endblock %}
