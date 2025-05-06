@@ -1,14 +1,16 @@
 use cobalto::router::Router;
 
 mod apps;
+mod middleware;
 mod settings;
 mod urls;
-mod middleware;
+use crate::settings::DefaultSettings;
 use env_logger;
 use log::debug;
-use crate::settings::DefaultSettings;
 
-use crate::middleware::{logging_middleware, auth_required, timing_middleware, timing_post_middleware};
+use crate::middleware::{
+    auth_required, logging_middleware, timing_middleware, timing_post_middleware,
+};
 
 #[tokio::main]
 async fn main() {
@@ -18,7 +20,7 @@ async fn main() {
     let settings = DefaultSettings::new();
 
     let mut router = Router::new();
-    
+
     router.add_middleware(logging_middleware());
     router.add_middleware(auth_required());
     router.add_middleware(timing_middleware());
@@ -26,5 +28,7 @@ async fn main() {
 
     crate::urls::register_routes(&mut router);
 
-    router.run(settings).await.unwrap();
+    if let Err(e) = router.run(settings).await {
+        eprintln!("Server error: {e}");
+    }
 }

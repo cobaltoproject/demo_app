@@ -1,9 +1,18 @@
 <html>
-  <head>
-    <title>Cobalto App</title>
-    {% tailwind %}
-  </head>
-  <body>
-    {% block content %}{% endblock %}
-  </body>
+    <head>
+        <title>Cobalto App</title>
+        {% tailwind %}
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+        <script>
+            const socket = new WebSocket("ws://localhost:9000/ws/reload");
+            socket.onmessage = (event) => {
+                if (event.data === "reload") {
+                    console.log("🔄 Reloading page...");
+                    location.reload();
+                }
+            };
+        </script>
+    </body>
 </html>
