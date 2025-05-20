@@ -1,9 +1,10 @@
 use cobalto_derive::Model;
-use sqlx::FromRow;
+use serde::Deserialize;
+use serde::Serialize;
 
-#[derive(Model, FromRow, Debug)]
-pub struct User {
+#[derive(Debug, Serialize, Deserialize, Model)]
+pub struct Post {
     pub id: i64,
-    pub username: String,
-    pub email: Option<String>,
+    pub title: String,
+    pub content: String,
 }
